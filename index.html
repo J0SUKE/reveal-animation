@@ -8,8 +8,26 @@
     <title>reveal animation</title>
 </head>
 <body>
+    <div class="cursor"></div>
     <header>
-        <span>About</span>
+        <div class="header">
+            <div class="logo">
+                <span>JF</span>
+                <span>2020</span>
+            </div>
+            
+            <div class="links">
+                <p>Typography Motion Effect</p>
+                <ul>
+                    <li><a href="https://github.com/J0SUKE/reveal-animation" target="_blank">Github</a></li>
+                    <li><a href="https://twitter.com/Jean_M_____I" target="_blank">Twitter</a></li>
+                    <li><a href="https://github.com/J0SUKE" target="_blank">More projects</a></li>
+                </ul>
+            </div>
+            
+            <span class="About-btn">About</span>
+        </div>
+        
     </header>
     <main>
         <h1 class="title">
@@ -18,16 +36,18 @@
         </h1>
     </main>
     <section class="about">
-        <header>
-            <span>close</span>
-        </header>
         <div class="about-content">
             <p>JOHNATHAN FLYNN IS</p>
             <p>A SALT LAKE CITY</p>
             <p>BASED DATA AND SOCIAL</p>
-            <div>
+            <div class="img-paragraph">           
+                <div class="img-paragraph__left">
                 <p>ENGINEER</p>
-                <img src="./assets/img1.jpg" alt="">
+                <figure class="img-unrevealed">
+                    <figcaption>We are here face to face with a crucial point in analytic realism. Realism argues that we have no alternative except either to regard analysis as falsifying, and thus commit ourselves to distrust of science as an organ of knowledge.</figcaption>
+                </figure>
+                </div>
+                <img class="img-unrevealed" src="./assets/img1.jpg" alt="">
             </div>
             
         </div>
@@ -35,6 +55,7 @@
     </section>
 </body>
 
-<script src="./script.js"></script>
+<script src="./js/script.js"></script>
+<script src="./js/cursor.js"></script>
 
 </html>

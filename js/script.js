@@ -1,8 +1,10 @@
 let mainTitleContainer = [...document.querySelectorAll(".title p")];
 let aboutTitleContainer = [...document.querySelectorAll(".about-content p")];
 
+//Divise un paragraph en plusieurs spans 
+
 function splitToSpans(domElement) {
-    domElement.forEach(element => {
+    domElement.forEach(element => {    
         let textContent = element.textContent;
         let markup="";
         textContent=textContent.split("");
@@ -19,31 +21,30 @@ splitToSpans(aboutTitleContainer);
 
 let mainTitleLetters = [...document.querySelectorAll(".title span")];
 let aboutTilteletter = [...document.querySelectorAll(".about-content p")];
+let aboutImg = document.querySelector(".about img");
+let figcaption = document.querySelector(".about figure");
 let menuActive = false;
 let isTransitioning = false;
 let animationDuration = 440;
+let bezierCurve1 = "cubic-bezier(0.74,0.12,0.59,0.91)";
+let bezierCurve2 = "cubic-bezier( 1, 0.01, 0.78, 0.98 )";
 
 function UnrevealMainTitle(letters,delay) {
     isTransitioning=true;
     letters.forEach(element => {
-        element.style.animation = `letter-animation-unreveal ${animationDuration}ms ${delay}ms forwards cubic-bezier(0.74,0.12,0.59,0.91)`;
+        element.style.animation = `letter-animation-unreveal ${animationDuration}ms ${delay}ms forwards ${bezierCurve1}`;
         setTimeout(() => {
             element.style.animation='unset';
             element.style.transform='translateY(-100%)';
         }, animationDuration+delay);
         delay+=20;
     });    
-    setTimeout(() => {
-        isTransitioning=false;
-    }, 500+delay);
 }
 
 function RevealMainTitle(letters,delay) {
-    isTransitioning=true;
-    
     for (let i = letters.length-1; i >=0; i--) 
     {
-        letters[i].style.animation = `letter-animation-reveal ${animationDuration}ms ${delay}ms forwards cubic-bezier(0.74,0.12,0.59,0.91)`
+        letters[i].style.animation = `letter-animation-reveal ${animationDuration}ms ${delay}ms forwards ${bezierCurve1}`
         setTimeout(() => {
             letters[i].style.animation='unset';
             letters[i].style.transform='translateY(0%)';
@@ -64,10 +65,10 @@ function revealAboutTitle(paragraphs,duration,delay) {
     let delays = [d1,d2,d3,d4];
 
 
-    document.querySelector(".about").style.animation = `animateBackgound ${duration}ms ${delay}ms forwards`;
+    document.body.style.animation = `animateBackgound ${duration}ms ${delay}ms forwards`;
     
     setTimeout(() => {
-        document.querySelector(".about").style.backgroundColor = "rgba(195, 185, 150,1)";    
+        document.body.style.backgroundColor = "rgba(195, 185, 150,1)";    
     }, duration+d4);
     
 
@@ -89,6 +90,19 @@ function revealAboutTitle(paragraphs,duration,delay) {
         }
     }
 
+    aboutImg.style.animation = `animate-reveal-Img ${duration}ms ${d4}ms forwards`;
+    figcaption.style.animation = `animate-reveal-Img ${duration}ms ${d4}ms forwards`;
+    setTimeout(() => {
+        aboutImg.classList.add("img-revealed");
+        aboutImg.classList.remove("img-unrevealed");
+        
+        figcaption.classList.add("img-revealed");
+        figcaption.classList.remove("img-unrevealed");
+        
+        isTransitioning=false;
+        
+    }, duration+d4);
+
 }
 
 function unrevealAboutTitle(paragraphs,duration,delay) {
@@ -98,13 +112,15 @@ function unrevealAboutTitle(paragraphs,duration,delay) {
     let d1 = d2+200;
     
     let delays = [d1,d2,d3,d4];
-    
+
+    isTransitioning=true;
+
     for (let i = 0; i < paragraphs.length; i++) {
 
         let spans = [...paragraphs[i].querySelectorAll("span")];
 
         for (let j = spans.length-1; j >=0; j--) {
-            spans[j].style.animation = `from-bottom-letter-unreveal ${duration}ms ${delays[i]}ms forwards`;
+            spans[j].style.animation = `from-bottom-letter-unreveal ${duration}ms ${delays[i]}ms forwards ${bezierCurve2}`;
             setTimeout(() => {
                 spans[j].style.transform = "translateY(100%)"
             }, duration+delays[i]);
@@ -113,31 +129,42 @@ function unrevealAboutTitle(paragraphs,duration,delay) {
         }
     }
 
-    document.querySelector(".about").style.animation = `revertAnimateBackgound ${duration}ms ${d1}ms forwards`;
+    aboutImg.style.animation = `animate-unreveal-Img ${duration}ms ${d1}ms forwards ${bezierCurve2}`;
+    figcaption.style.animation = `animate-unreveal-Img ${duration}ms ${d1}ms forwards ${bezierCurve2}`;
+    setTimeout(() => {
+        aboutImg.classList.add("img-unrevealed");
+        aboutImg.classList.remove("img-revealed");
+        
+        figcaption.classList.add("img-unrevealed");
+        figcaption.classList.remove("img-revealed");
+    }, duration+d1);
+
+    document.body.style.animation = `revertAnimateBackgound ${duration}ms ${d1}ms forwards`;
 
     setTimeout(() => {
-        document.querySelector(".about").style.backgroundColor = "rgba(250, 245, 227,0)";    
+        document.body.style.backgroundColor = "rgba(250, 245, 227,1)";    
         document.querySelector(".about").style.display = `none`;
     }, delays[0]+duration);
 }
 
-let aboutBtn = document.querySelector("header span");
-let closeBtn = document.querySelector(".about header span");
+let aboutBtn = document.querySelector("header .About-btn");
 
 function ToggleAbout() {
+    if (isTransitioning) return; 
+    
     if (menuActive)
     {
         menuActive=false;
-        RevealMainTitle(mainTitleLetters,1200);        
-        unrevealAboutTitle(aboutTilteletter,900,200);    
+        aboutBtn.textContent = "About";
+        RevealMainTitle(mainTitleLetters,1400);        
+        unrevealAboutTitle(aboutTilteletter,900,0);    
         return;
     }
     menuActive=true;
+    aboutBtn.textContent = "Close";
     UnrevealMainTitle(mainTitleLetters,0)
     revealAboutTitle(aboutTilteletter,900,400)
 }
 
-
 aboutBtn.addEventListener("click",ToggleAbout);
-closeBtn.addEventListener("click",ToggleAbout);
 
