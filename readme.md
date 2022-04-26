@@ -5,7 +5,7 @@
 <div align="center">
   <h3>
     See the Demo 
-    <a href=" https://j0suke.github.io/reveal-animation/" target="_blank">
+    <a href="https://j0suke.github.io/reveal-animation/" target="_blank">
       here
     </a>
   </h3>
