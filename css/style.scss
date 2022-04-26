@@ -139,18 +139,18 @@ header
 }
 
 
-// @keyframes animateBackgound {
-//     from{
-//         background-color: #FAF5E3;
-//     }to{
-//         background-color: #C3B996;
-//     }
-// }
+@keyframes animateBackgound {
+    from{
+        background-color: rgba(250, 245, 227,0);
+    }to{
+        background-color: rgba(195, 185, 150,1);
+    }
+}
 
-// @keyframes revertAnimateBackgound {
-//     from{
-//         background-color: #C3B996;
-//     }to{
-//         background-color: #FAF5E3;
-//     }
-// }
+@keyframes revertAnimateBackgound {
+    from{
+        background-color: rgba(195, 185, 150,1);
+    }to{
+        background-color: rgba(250, 245, 227,0);
+    }
+}

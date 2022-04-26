@@ -219,4 +219,40 @@ header span {
             transform: translateY(100%);
   }
 }
+
+@-webkit-keyframes animateBackgound {
+  from {
+    background-color: rgba(250, 245, 227, 0);
+  }
+  to {
+    background-color: #c3b996;
+  }
+}
+
+@keyframes animateBackgound {
+  from {
+    background-color: rgba(250, 245, 227, 0);
+  }
+  to {
+    background-color: #c3b996;
+  }
+}
+
+@-webkit-keyframes revertAnimateBackgound {
+  from {
+    background-color: #c3b996;
+  }
+  to {
+    background-color: rgba(250, 245, 227, 0);
+  }
+}
+
+@keyframes revertAnimateBackgound {
+  from {
+    background-color: #c3b996;
+  }
+  to {
+    background-color: rgba(250, 245, 227, 0);
+  }
+}
 /*# sourceMappingURL=style.css.map */

@@ -31,7 +31,7 @@ function UnrevealMainTitle(letters,delay) {
             element.style.animation='unset';
             element.style.transform='translateY(-100%)';
         }, animationDuration+delay);
-        delay+=25;
+        delay+=20;
     });    
     setTimeout(() => {
         isTransitioning=false;
@@ -40,14 +40,16 @@ function UnrevealMainTitle(letters,delay) {
 
 function RevealMainTitle(letters,delay) {
     isTransitioning=true;
-    letters.forEach(element => {
-        element.style.animation = `letter-animation-reveal ${animationDuration}ms ${delay}ms forwards cubic-bezier(0.74,0.12,0.59,0.91)`
+    
+    for (let i = letters.length-1; i >=0; i--) 
+    {
+        letters[i].style.animation = `letter-animation-reveal ${animationDuration}ms ${delay}ms forwards cubic-bezier(0.74,0.12,0.59,0.91)`
         setTimeout(() => {
-            element.style.animation='unset';
-            element.style.transform='translateY(0%)';
+            letters[i].style.animation='unset';
+            letters[i].style.transform='translateY(0%)';
         },animationDuration+delay);
-        delay+=25;
-    });       
+        delay+=15;   
+    }      
 
     setTimeout(() => {
         isTransitioning=false;
@@ -61,6 +63,14 @@ function revealAboutTitle(paragraphs,duration,delay) {
     let d4 = d3+300;
     let delays = [d1,d2,d3,d4];
 
+
+    document.querySelector(".about").style.animation = `animateBackgound ${duration}ms ${delay}ms forwards`;
+    
+    setTimeout(() => {
+        document.querySelector(".about").style.backgroundColor = "rgba(195, 185, 150,1)";    
+    }, duration+d4);
+    
+
     setTimeout(() => {
         document.querySelector(".about").style.display = `unset`;
     }, delay);
@@ -71,11 +81,11 @@ function revealAboutTitle(paragraphs,duration,delay) {
 
         for (let j =0; j <spans.length; j++) {
             spans[j].style.animation = `from-bottom-letter-reveal ${duration}ms ${delays[i]}ms forwards`;
+            //apres combien de temps l'animation d'un span se termine t'elle ? 
+            setTimeout(() => {
+                spans[j].style.transform = "translateY(0%)"
+            }, duration+delays[i]);
             delays[i]+=15;
-            // setTimeout(() => {
-            //     spans[j].style.transform = `translateY(0%)`;
-            // }, delays[i]+duration);
-
         }
     }
 
@@ -88,7 +98,7 @@ function unrevealAboutTitle(paragraphs,duration,delay) {
     let d1 = d2+200;
     
     let delays = [d1,d2,d3,d4];
-
+    
     for (let i = 0; i < paragraphs.length; i++) {
 
         let spans = [...paragraphs[i].querySelectorAll("span")];
@@ -96,15 +106,17 @@ function unrevealAboutTitle(paragraphs,duration,delay) {
         for (let j = spans.length-1; j >=0; j--) {
             spans[j].style.animation = `from-bottom-letter-unreveal ${duration}ms ${delays[i]}ms forwards`;
             setTimeout(() => {
-                spans[j].style.transform = `translateY(100%)`;
-            }, delays[i]+duration);
-            
+                spans[j].style.transform = "translateY(100%)"
+            }, duration+delays[i]);
             delays[i]+=15;
             
         }
     }
 
+    document.querySelector(".about").style.animation = `revertAnimateBackgound ${duration}ms ${d1}ms forwards`;
+
     setTimeout(() => {
+        document.querySelector(".about").style.backgroundColor = "rgba(250, 245, 227,0)";    
         document.querySelector(".about").style.display = `none`;
     }, delays[0]+duration);
 }
@@ -122,7 +134,7 @@ function ToggleAbout() {
     }
     menuActive=true;
     UnrevealMainTitle(mainTitleLetters,0)
-    revealAboutTitle(aboutTilteletter,900,500)
+    revealAboutTitle(aboutTilteletter,900,400)
 }
 
 
