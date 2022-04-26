@@ -9,7 +9,14 @@ function splitToSpans(domElement) {
         let markup="";
         textContent=textContent.split("");
         textContent.forEach(word => {
-            markup+=`<span>${word}</span>`;
+            if (word==" ") {
+                markup+=`<span class="space">I</span>`;    
+            }
+            else
+            {
+                markup+=`<span>${word}</span>`;
+            }
+            
         });
         element.innerHTML=markup;
     });    
@@ -163,7 +170,7 @@ function ToggleAbout() {
     menuActive=true;
     aboutBtn.textContent = "Close";
     UnrevealMainTitle(mainTitleLetters,0)
-    revealAboutTitle(aboutTilteletter,900,400)
+    revealAboutTitle(aboutTilteletter,900,300)
 }
 
 aboutBtn.addEventListener("click",ToggleAbout);
