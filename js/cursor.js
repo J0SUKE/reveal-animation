@@ -1,3 +1,5 @@
+let cursorElement = document.querySelector(".cursor");
+
 class Cursor
 {
     constructor(domElement,lerp)
@@ -16,6 +18,8 @@ class Cursor
 
     updateCursor(positionX,positionY)
     {
+        if (!this.enabled) return;
+        
         this.x = lerp(this.x, positionX, this.lerp);
         this.y = lerp(this.y, positionY, this.lerp);
 
@@ -29,6 +33,8 @@ class Cursor
     }
     scroll()
     {
+        if (!this.enabled) return;
+        
         const{scrollTop} = document.documentElement;
         let deltaScroll = scrollTop-this.lastScroll;
         this.y = this.cursorTop+deltaScroll;
@@ -37,6 +43,7 @@ class Cursor
     }
     show()
     {
+        if (!this.enabled) return;
         this.element.style.opacity = "1";
     }
     enable()
@@ -56,20 +63,13 @@ function lerp (start, end, amt){
   }
 
 
-let cursor=new Cursor(document.querySelector(".cursor"),0.3);
+let cursor=new Cursor(cursorElement,0.3);
 
-document.addEventListener("mouseover",()=>{
-    if (!cursor.enabled) return;
-    cursor.show();
-});
-document.addEventListener("scroll",()=>{
-    if (!cursor.inabled) return;
-    cursor.scroll();
-});
+document.addEventListener("mouseover",cursor.show.bind(cursor));
+document.addEventListener("scroll",cursor.scroll.bind(cursor));
 
 
 document.addEventListener("mousemove",(e)=>{
-    if (!cursor.enabled) return;
     cursor.updateCursor(e.pageX,e.pageY);
 })
 
@@ -90,4 +90,4 @@ let deviceType = getDeviceType();
 
 if (deviceType=="mobile" || deviceType=="tablet") {
     cursor.disable();
-}
+}   
